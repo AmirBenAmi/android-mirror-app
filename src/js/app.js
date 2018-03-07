@@ -8,19 +8,20 @@ import subscribeToimage  from './api';
 export default class Image extends React.Component {
     constructor(props){
         super(props);
-        this.state = {imageNum: 0, filePath: '../../out.png', imageBuffer:'' };
-        subscribeToimage((counter, filePath, buffer) => {
-            this.setState({imageNum: counter, filePath:`../.${filePath}`, imageBuffer: buffer} );
-            console.log('image count is:', this.state.imageNum);
-            console.log('file path is:', this.state.filePath);
+        this.state = {filePath: '../../out.png', imageFromBuf:{image: true, buffer:''}};
+        subscribeToimage((filePath, buffer) => {
+            this.setState({filePath:`../.${filePath}`, imageFromBuf:{image: true, buffer: buffer}} );
+            // console.log('file path is:', this.state.filePath);
+            // console.log('image buf:', this.state.imageFromBuf.buffer);
             // console.log('buffer:', buffer);
+            console.log('New Image!');
         });
 
     };
     render(){
         return (
             <div>
-            <ImageComponent imagePath={this.state.filePath} imageBuffer={this.state.imageBuffer}/> 
+            <ImageComponent imagePath={this.state.filePath} imageFromBuf={this.state.imageFromBuf}/> 
             </div>
         )
     }

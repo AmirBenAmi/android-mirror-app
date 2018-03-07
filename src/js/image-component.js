@@ -6,7 +6,7 @@ export default class ImageComponent extends React.Component {
     }
     render() {
         return (
-            <img src={this.props.imagePath} height="600" width="350"/>
+            <img src={'data:image/jpeg;base64,'+ this.props.imageFromBuf.buffer} height="600" width="350"/>
         );
     }
 }

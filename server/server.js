@@ -1,13 +1,9 @@
 const path = require('path');
 const express = require('express');
 const io = require('socket.io')();
-// const http = require('http');
 const app = express();
 const publicPath = path.join(__dirname, '..', 'public','dist');
 const port = process.env.PORT || 3000;
-
-// let server = http.createServer(app);
-// let io = socketIO(server);
 
 app.use(express.static(publicPath));
 
@@ -64,22 +60,19 @@ io.on('connection', (socket) => {
             prevFileCounter = fileCounter;
             fileCounter++;
             let buffer = new Buffer.concat(bufs);
-            filePath = `./out${fileCounter}.png`;
-            // filePath = path.join( publicPath, `out${fileCounter}.png`);
-            let out = fs.createWriteStream(filePath);
-            out.write(buffer);
-            out.end();
-            socket.emit('newImage', filePath, buffer);
-            if(prevFileCounter > 0){
-              // filePath = path.join( publicPath, `out${prevFileCounter}.png`);
-            // fs.unlinkSync(`./out${prevFileCounter}.png`);
-              filePath = `./out${prevFileCounter}.png`;
-              fs.unlink(filePath, (err) => {
-                if(err) {
-                  console.log('file cannot be deleted!', filePath);
-                }
-              });
-            }
+            //filePath = `./out${fileCounter}.png`;
+            //let out = fs.createWriteStream(filePath);
+            // out.write(buffer);
+            // out.end();
+            socket.emit('newImage', filePath, buffer.toString('base64'));
+            // if(prevFileCounter > 0){
+            //   filePath = `./out${prevFileCounter}.png`;
+            //   fs.unlink(filePath, (err) => {
+            //     if(err) {
+            //       console.log('file cannot be deleted!', filePath);
+            //     }
+            //   });
+            // }
         });
         
       });

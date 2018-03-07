@@ -11,7 +11,8 @@ export default class CanvasComponent extends React.Component {
         const ctx = this.refs.canvas.getContext('2d');
         const img = new Image();
         // img.src = '../../out.png';
-        img.src = this.props.imagePath
+        // img.src = this.props.imagePath
+        img.src = 'data:image/jpeg;base64,', + this.props.imageFromBuf.buffer;
         img.onload = () => {
             ctx.drawImage(img,0,0);
         }
